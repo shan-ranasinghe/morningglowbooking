@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Morning Glow Ella - Boutique Hotel Operations</title>
+  
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Morning Glow Ella" />
+  <meta name="theme-color" content="#35613a" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <style>
+    :root {
+      --bg: #f2f8ec;
+      --card-bg: #fffef8;
+      --border: #d5e4c8;
+      --text: #243a2b;
+      --text-muted: #637563;
+      --primary: #5d8b4d;
+      --primary-dark: #35613a;
+      --accent: #d7a928;
+      --espresso: #243a2b;
+      --cream: #fffdf0;
+
+      --ch-booking: #5d8b4d;
+      --ch-airbnb: #c88b3a;
+      --ch-phone: #648b78;
+      --ch-visiting: #d0a52d;
+
+      --safe-bottom: env(safe-area-inset-bottom, 16px);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: linear-gradient(135deg, rgba(255,255,255,0.58), rgba(215,235,198,0.38));
+      color: var(--text);
+      padding-bottom: calc(75px + var(--safe-bottom));
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Top App Header */
+    .app-header {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 254, 248, 0.97);
+      backdrop-filter: blur(8px);
+      z-index: 40;
+      border-bottom: 1px solid var(--border);
+      box-shadow: 0 2px 14px rgba(53, 97, 58, 0.07);
+      padding: 0.75rem 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--espresso);
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: 0.01em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .icon-btn:active {
+      background: #edf5e7;
+      transform: scale(0.92);
+    }
+
+    /* Quick Date Switcher Bar */
+    .date-indicator-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .live-clock {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--primary-dark);
+      background: #fff3b8;
+      padding: 3px 8px;
+      border-radius: 12px;
+    }
+
+    /* Content Area */
+    .view-content {
+      padding: 1rem;
+    }
+
+    /* Section Headers */
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.65rem;
+      margin-top: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Room Prep Summary Card */
+    .room-prep-card {
+      background: var(--card-bg);
+      border-radius: 0.85rem;
+      border: 1px solid var(--border);
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.65rem;
+      box-shadow: 0 4px 16px rgba(53, 97, 58, 0.08);
+      position: relative;
+    }
+
+    .room-prep-card.border-checkin { border-left: 5px solid #6d9f5e; }
+    .room-prep-card.border-checkout { border-left: 5px solid #c88b3a; }
+    .room-prep-card.border-staying { border-left: 5px solid var(--primary); }
+    .room-prep-card.border-vacant { border-left: 5px solid #b8cba9; opacity: 0.82; }
+
+    .room-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.35rem;
+    }
+
+    .room-name-title {
+      font-weight: 800;
+      font-size: 0.95rem;
+      color: var(--espresso);
+    }
+
+    .status-badge {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+    }
+    .badge-checkin { background: #e0f0d9; color: #477342; }
+    .badge-checkout { background: #fff0cf; color: #9a671f; }
+    .badge-staying { background: #eaf3df; color: #477342; }
+    .badge-vacant { background: #edf3e8; color: #637563; }
+
+    .guest-line {
+      font-size: 0.85rem;
+      color: #38523c;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    /* Food & Prep Box */
+    .food-box {
+      background: #fff8d9;
+      border: 1px dashed #dfbd45;
+      border-radius: 0.5rem;
+      padding: 0.45rem 0.65rem;
+      font-size: 0.78rem;
+      color: #477342;
+      margin-top: 0.45rem;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .card-actions-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+      padding-top: 0.45rem;
+      border-top: 1px solid #e3eddc;
+      font-size: 0.75rem;
+    }
+
+    .btn-action-small {
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 0.25rem 0.55rem;
+      border-radius: 0.4rem;
+      border: 1px solid var(--border);
+      background: #f7fbf1;
+      color: var(--primary-dark);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    /* Channel dots */
+    .ch-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 4px;
+    }
+    .bg-booking { background-color: var(--ch-booking); }
+    .bg-airbnb { background-color: var(--ch-airbnb); }
+    .bg-phone { background-color: var(--ch-phone); }
+    .bg-visiting { background-color: var(--ch-visiting); }
+
+    /* Timeline Table View */
+    .timeline-card {
+      background: var(--card-bg);
+      border-radius: 0.85rem;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    .timeline-scroll-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .m-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 800px;
+    }
+    .m-table th, .m-table td {
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.75rem;
+      height: 48px;
+    }
+    .m-table th {
+      background: #f7fbf1;
+      font-weight: 600;
+      color: var(--text-muted);
+      min-width: 32px;
+      height: 34px;
+    }
+    .m-table .sticky-room {
+      position: sticky;
+      left: 0;
+      background: var(--card-bg);
+      font-weight: 700;
+      text-align: left;
+      padding: 0 0.75rem;
+      width: 140px;
+      min-width: 140px;
+      z-index: 2;
+      border-right: 2px solid var(--border);
+    }
+    .timeline-bar {
+      height: 38px;
+      border-radius: 6px;
+      padding: 0.2rem 0.4rem;
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: calc(60px + var(--safe-bottom));
+      padding-bottom: var(--safe-bottom);
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      z-index: 50;
+      box-shadow: 0 -2px 10px rgba(53,97,58,0.08);
+    }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      font-size: 0.68rem;
+      font-weight: 600;
+      gap: 0.2rem;
+      width: 33%;
+      cursor: pointer;
+    }
+    .nav-item.active { color: var(--primary); }
+    .nav-icon { font-size: 1.25rem; }
+
+    /* Floating Add Button */
+    .fab {
+      position: fixed;
+      bottom: calc(75px + var(--safe-bottom));
+      right: 1.25rem;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      box-shadow: 0 4px 15px rgba(93, 139, 77, 0.38);
+      cursor: pointer;
+      z-index: 45;
+      border: none;
+    }
+    .fab:active { transform: scale(0.92); }
+
+    /* Modal Sheet */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(36, 58, 43, 0.62);
+      backdrop-filter: blur(4px);
+      z-index: 60;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .sheet-modal {
+      background: var(--card-bg);
+      width: 100%;
+      max-width: 500px;
+      border-radius: 1.25rem 1.25rem 0 0;
+      padding: 1.25rem 1.25rem calc(1.5rem + var(--safe-bottom)) 1.25rem;
+      max-height: 90vh;
+      overflow-y: auto;
+      animation: slideUp 0.2s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      background: #b8cba9;
+      border-radius: 2px;
+      margin: 0 auto 1rem auto;
+    }
+    .sheet-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    .form-group { margin-bottom: 0.85rem; }
+    .form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #38523c;
+      margin-bottom: 0.3rem;
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 0.85rem;
+      border-radius: 0.65rem;
+      border: 1px solid var(--border);
+      font-size: 0.9rem;
+      outline: none;
+      background: #f7fbf1;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--primary);
+      background: var(--card-bg);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .sheet-actions { display: flex; gap: 0.6rem; margin-top: 1.2rem; }
+    .btn {
+      flex: 1;
+      padding: 0.85rem;
+      border-radius: 0.65rem;
+      font-size: 0.92rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+    }
+    .btn-save { background: var(--primary); color: #fffdf0; }
+    .btn-del { background: #fff0cf; color: #9a671f; flex: 0 0 70px; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(-50px);
+      background: var(--espresso);
+      color: #fffdf0;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(36,58,43,0.18);
+      z-index: 100;
+      opacity: 0;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+    }
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* Operations controls and responsive layout */
+    .view-content { max-width: 1280px; margin: 0 auto; }
+    .ops-toolbar {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 0.9rem;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 4px 16px rgba(53, 97, 58, 0.07);
+    }
+    .ops-toolbar-grid { display: grid; grid-template-columns: minmax(200px, 2fr) repeat(4, minmax(120px, 1fr)) auto; gap: 0.55rem; align-items: center; }
+    .toolbar-field, .toolbar-btn {
+      min-height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 0.55rem;
+      background: #f7fbf1;
+      color: var(--espresso);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      outline: none;
+    }
+    .toolbar-field:focus { border-color: var(--primary); background: var(--card-bg); }
+    .toolbar-search { min-width: 0; }
+    .toolbar-btn { cursor: pointer; background: var(--primary); color: var(--cream); border-color: var(--primary); }
+    .toolbar-btn.secondary { background: transparent; color: var(--primary-dark); }
+    .toolbar-summary { color: var(--text-muted); font-size: 0.75rem; margin-top: 0.55rem; }
+    .stats-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.65rem; margin-bottom: 1.1rem; }
+    .stat-card { background: rgba(255,254,248,0.86); border: 1px solid var(--border); border-radius: 0.7rem; padding: 0.7rem 0.8rem; }
+    .stat-label { color: var(--text-muted); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .stat-value { color: var(--espresso); font-family: Georgia, serif; font-size: 1.25rem; font-weight: 700; margin-top: 0.15rem; }
+    .booking-meta { display:flex; flex-wrap:wrap; gap:0.35rem 0.7rem; color:var(--text-muted); font-size:0.74rem; margin-top:0.35rem; }
+    .sync-status { font-size: 0.7rem; color: var(--text-muted); text-align: right; margin-top: 0.3rem; }
+    .empty-state { padding: 1.25rem 0.75rem; color: var(--text-muted); text-align:center; font-size:0.82rem; border:1px dashed var(--border); border-radius:0.7rem; }
+    .sheet-modal { max-width: 680px; }
+    .form-section-label { margin: 1rem 0 0.55rem; color: var(--primary-dark); font-family: Georgia, serif; font-weight: 700; font-size: 0.95rem; border-bottom: 1px solid var(--border); padding-bottom: 0.35rem; }
+    @media (min-width: 800px) {
+      .app-header, .date-indicator-bar { padding-left: max(1.5rem, calc((100vw - 1280px) / 2 + 1rem)); padding-right: max(1.5rem, calc((100vw - 1280px) / 2 + 1rem)); }
+      .view-content { padding: 1.25rem 1.5rem 2rem; }
+      #todayRoomsContainer, #tomorrowRoomsContainer { display:grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.7rem; }
+      #todayRoomsContainer .room-prep-card, #tomorrowRoomsContainer .room-prep-card { margin-bottom: 0; }
+      .section-head { grid-column: 1 / -1; }
+      .bottom-nav { left: 50%; right: auto; width: min(560px, 100%); transform: translateX(-50%); border-radius: 1rem 1rem 0 0; }
+      .fab { right: max(1.25rem, calc((100vw - 1280px) / 2 + 1.25rem)); }
+    }
+    @media (max-width: 799px) {
+      .ops-toolbar-grid { grid-template-columns: 1fr 1fr; }
+      .toolbar-search { grid-column: 1 / -1; }
+      .toolbar-btn { width: 100%; }
+    }
+    @media (max-width: 480px) {
+      .stats-strip { grid-template-columns: repeat(2, 1fr); }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .brand-title { font-size: 1rem; }
+      .brand-sub { font-size: 0.62rem; }
+    }
+
+    /* Professional guest-experience presentation */
+    .app-header { padding-top: 0.95rem; padding-bottom: 0.95rem; }
+    .brand-title { font-size: 1.18rem; letter-spacing: 0.025em; }
+    .brand-sub { margin-top: 0.12rem; }
+    .brand-kicker { color: var(--accent); font-size: 0.62rem; font-weight: 800; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 0.12rem; }
+    .welcome-panel { max-width: 1280px; margin: 1.1rem auto 0; padding: 0 1rem; }
+    .welcome-panel-inner { background: linear-gradient(120deg, #35613a, #6d9f5e); color: #fffdf0; border-radius: 1rem; padding: 1.1rem 1.25rem; box-shadow: 0 8px 24px rgba(53,97,58,0.2); display:flex; justify-content:space-between; align-items:center; gap:1rem; }
+    .welcome-kicker { color: #ffe27a; font-size: 0.68rem; font-weight: 800; letter-spacing: 0.15em; text-transform: uppercase; }
+    .welcome-title { font: 700 1.4rem Georgia, serif; margin-top: 0.22rem; }
+    .welcome-copy { color: #eef7e7; font-size: 0.78rem; margin-top: 0.25rem; }
+    .welcome-mark { font: 2.8rem Georgia, serif; color: #ffe27a; opacity: 0.85; }
+    .message-preview { background: #f7fbf1; border: 1px solid var(--border); border-radius: 0.7rem; padding: 0.9rem; white-space: pre-wrap; color: #38523c; font-size: 0.82rem; line-height: 1.55; max-height: 250px; overflow:auto; }
+    .message-channel-row { display:flex; gap:0.6rem; margin-top:1rem; }
+    .btn-whatsapp { background:#477342; color:#fffdf0; }
+    .btn-email { background:var(--primary); color:#fffdf0; }
+    .btn-copy { background:#eaf3df; color:var(--primary-dark); }
+    .message-note { margin-top:0.75rem; color:var(--text-muted); font-size:0.72rem; line-height:1.45; }
+    .contact-missing { color:#9a671f; font-size:0.78rem; background:#fff0cf; border-radius:0.5rem; padding:0.65rem; }
+    .developer-credit { max-width:1280px; margin:0 auto; padding:0.4rem 1rem 5.5rem; text-align:center; color:var(--text-muted); font-size:0.68rem; letter-spacing:0.08em; text-transform:uppercase; }
+    .developer-credit strong { color:var(--primary-dark); font-weight:800; }
+    @media (max-width: 799px) { .welcome-panel { padding: 0 1rem; } .welcome-panel-inner { padding: 0.9rem 1rem; } .welcome-mark { font-size:2rem; } }
+  </style>
+</head>
+<body>
+
+  <!-- App Header -->
+  <header class="app-header">
+    <div>
+      <div class="brand-kicker">Boutique Guesthouse · Ella</div>
+      <div class="brand-title">✦ Morning Glow Ella</div>
+      <div class="brand-sub">Guest Experience & Operations Desk</div>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="fetchFromGoogleSheet()" title="Sync Google Sheet">🔄</button>
+    </div>
+  </header>
+
+  <!-- Live Date Status -->
+  <div class="date-indicator-bar">
+    <div>
+      <span style="color:var(--text-muted); font-size: 0.75rem;">TODAY: </span>
+      <span id="headerTodayDate">--</span>
+    </div>
+    <div class="live-clock" id="liveClockDisplay">Ella Time</div>
+  </div>
+
+
+  <section class="welcome-panel" aria-label="Guest experience overview">
+    <div class="welcome-panel-inner">
+      <div>
+        <div class="welcome-kicker">Daily service brief</div>
+        <div class="welcome-title">Make every arrival feel effortless.</div>
+        <div class="welcome-copy">Manage reservations, room readiness, payments, and guest communication from one calm workspace.</div>
+      </div>
+      <div class="welcome-mark">✦</div>
+    </div>
+  </section>
+
+  <!-- Search, filter and sort controls -->
+  <div class="view-content" style="padding-bottom: 0;">
+    <div class="ops-toolbar">
+      <div class="ops-toolbar-grid">
+        <input id="bookingSearch" class="toolbar-field toolbar-search" type="search" placeholder="Search guest, room, phone or notes" oninput="handleFilterChange()" />
+        <select id="filterRoom" class="toolbar-field" onchange="handleFilterChange()"><option value="">All rooms</option></select>
+        <select id="filterStatus" class="toolbar-field" onchange="handleFilterChange()"><option value="">All statuses</option><option value="pending">Pending</option><option value="confirmed">Confirmed</option><option value="checked-in">Checked In</option><option value="checked-out">Checked Out</option><option value="cancelled">Cancelled</option></select>
+        <select id="filterMethod" class="toolbar-field" onchange="handleFilterChange()"><option value="">All channels</option><option value="Booking.com">Booking.com</option><option value="Airbnb">Airbnb</option><option value="Facebook / Phone">Facebook / Phone</option><option value="By Visiting">By Visiting</option></select>
+        <select id="sortBookings" class="toolbar-field" onchange="handleFilterChange()"><option value="date-asc">Check-in: earliest</option><option value="date-desc">Check-in: latest</option><option value="guest-asc">Guest: A–Z</option><option value="room-asc">Room: A–Z</option><option value="status">Status</option></select>
+        <button class="toolbar-btn secondary" type="button" onclick="clearFilters()">Clear</button>
+      </div>
+      <div id="filterSummary" class="toolbar-summary">Showing all reservations</div>
+      <div id="syncStatus" class="sync-status">Ready for offline use</div>
+    </div>
+    <div class="stats-strip">
+      <div class="stat-card"><div class="stat-label">Visible bookings</div><div id="statVisible" class="stat-value">0</div></div>
+      <div class="stat-card"><div class="stat-label">Arrivals today</div><div id="statArrivals" class="stat-value">0</div></div>
+      <div class="stat-card"><div class="stat-label">Guests in-house</div><div id="statInHouse" class="stat-value">0</div></div>
+      <div class="stat-card"><div class="stat-label">Pending / action</div><div id="statPending" class="stat-value">0</div></div>
+    </div>
+  </div>
+
+  <!-- Main View Container -->
+  <div class="view-content">
+
+    <!-- View 1: Agenda / Room & Food Operations (Default) -->
+    <div id="viewAgenda">
+      <!-- Today's Section -->
+      <div class="section-head">
+        <div class="section-title" style="color: var(--primary-dark);">
+          <span>☀️ TODAY'S ROOM PREPARATION</span>
+        </div>
+        <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);" id="todayBadgeCount">0 Booked</span>
+      </div>
+      <div id="todayRoomsContainer"></div>
+
+      <!-- Tomorrow's Section -->
+      <div class="section-head" style="margin-top: 1.5rem;">
+        <div class="section-title" style="color: #477342;">
+          <span>🌅 TOMORROW'S PREPARATION & FOOD</span>
+        </div>
+        <span style="font-size:0.75rem; font-weight:700; color:var(--text-muted);" id="tomorrowBadgeCount">0 Booked</span>
+      </div>
+      <div id="tomorrowRoomsContainer"></div>
+
+      <!-- Later Bookings -->
+      <div class="section-head" style="margin-top: 1.5rem;">
+        <div class="section-title" style="color: var(--text-muted);">
+          <span>🗓️ FUTURE RESERVATIONS</span>
+        </div>
+      </div>
+      <div id="futureBookingsContainer"></div>
+    </div>
+
+    <!-- View 2: Timeline Grid -->
+    <div id="viewTimeline" style="display: none;">
+      <div class="timeline-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);">
+          <span style="font-weight: 800; font-size: 0.95rem;" id="mTimelineMonthTitle">Month</span>
+          <div style="display: flex; gap: 0.3rem;">
+            <button class="icon-btn" style="width: 32px; height: 32px;" onclick="prevMonth()">◀</button>
+            <button class="icon-btn" style="width: 32px; height: 32px;" onclick="nextMonth()">▶</button>
+          </div>
+        </div>
+        <div class="timeline-scroll-wrap">
+          <table class="m-table">
+            <thead>
+              <tr id="mTimelineHeader">
+                <th class="sticky-room">Room</th>
+              </tr>
+            </thead>
+            <tbody id="mTimelineBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Floating Add Booking Button -->
+  <button class="fab" onclick="openAddModal()">＋</button>
+
+  <div class="developer-credit">Developed by <strong>Shan Ranasinghe</strong></div>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav">
+    <div class="nav-item active" id="tabAgenda" onclick="switchTab('agenda')">
+      <span class="nav-icon">🛎️</span>
+      <span>Daily Prep</span>
+    </div>
+    <div class="nav-item" id="tabTimeline" onclick="switchTab('timeline')">
+      <span class="nav-icon">📅</span>
+      <span>Timeline</span>
+    </div>
+    <div class="nav-item" onclick="fetchFromGoogleSheet()">
+      <span class="nav-icon">🔄</span>
+      <span>Sync Sheet</span>
+    </div>
+  </nav>
+
+  <!-- Bottom Sheet Form Modal -->
+  <div class="modal-overlay" id="bookingModal" onclick="handleOverlayClick(event)">
+    <div class="sheet-modal" onclick="event.stopPropagation()">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <h3 id="modalTitle">New Reservation</h3>
+        <button class="icon-btn" style="border:none;" onclick="closeModal()">✕</button>
+      </div>
+
+      <form id="bookingForm" onsubmit="handleFormSubmit(event)">
+        <input type="hidden" id="bookingId" />
+
+        <div class="form-group">
+          <label>Select Room</label>
+          <select id="modalRoom" required>
+            <option value="Double Room 1">Double Room 1 (Double)</option>
+            <option value="Double Room 2">Double Room 2 (Double)</option>
+            <option value="Triple Room">Triple Room (Triple)</option>
+            <option value="Family Suite">Family Suite (Suite)</option>
+            <option value="Suite">Suite (Suite)</option>
+            <option value="Room 6">Room 6 (Double)</option>
+          </select>
+        </div>
+
+        <div class="form-section-label">Guest & stay details</div>
+        <div class="form-group">
+          <label>Guest Full Name</label>
+          <input type="text" id="modalGuest" placeholder="e.g. Kasun Fernando" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Contact Phone / WhatsApp</label>
+            <input type="tel" id="modalPhone" placeholder="+94 7X XXX XXXX" />
+          </div>
+          <div class="form-group">
+            <label>Guest Email</label>
+            <input type="email" id="modalEmail" placeholder="guest@example.com" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Adults</label>
+            <input type="number" id="modalAdults" min="1" max="20" value="2" required />
+          </div>
+          <div class="form-group">
+            <label>Children</label>
+            <input type="number" id="modalChildren" min="0" max="20" value="0" />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Check-In Date</label>
+            <input type="date" id="modalCheckIn" required />
+          </div>
+          <div class="form-group">
+            <label>Check-Out Date</label>
+            <input type="date" id="modalCheckOut" required />
+          </div>
+        </div>
+
+        <div class="form-section-label">Reservation & operations</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Booking Channel</label>
+            <select id="modalMethod" required>
+              <option value="Booking.com">Booking.com</option>
+              <option value="Airbnb">Airbnb</option>
+              <option value="Facebook / Phone">Facebook / Phone</option>
+              <option value="By Visiting">By Visiting</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Status</label>
+            <select id="modalStatus">
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="checked-in">Checked In</option>
+              <option value="checked-out">Checked Out</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Meal Plan</label>
+            <select id="modalMealPlan" required>
+              <option value="Room Only">Room Only</option>
+              <option value="BB">BB · Bed & Breakfast</option>
+              <option value="Half Board">Half Board</option>
+              <option value="Full Board">Full Board</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Payment</label>
+            <select id="modalPayment">
+              <option value="unpaid">Unpaid</option>
+              <option value="deposit-paid">Deposit Paid</option>
+              <option value="paid">Paid in Full</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Housekeeping</label>
+          <select id="modalHousekeeping">
+            <option value="not-started">Not Started</option>
+            <option value="in-progress">In Progress</option>
+            <option value="ready">Room Ready</option>
+            <option value="inspected">Inspected</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>🍳 Meals & Special Requests</label>
+          <textarea id="modalNotes" rows="2" placeholder="Breakfast time, dietary needs, transfers, extra bed, or other notes"></textarea>
+        </div>
+
+        <div class="sheet-actions">
+          <button type="button" class="btn btn-del" id="deleteBtn" style="display:none;" onclick="deleteActiveBooking()">🗑️</button>
+          <button type="submit" class="btn btn-save" id="saveBtn">Save Reservation</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Guest confirmation message preview -->
+  <div class="modal-overlay" id="guestMessageModal" onclick="handleMessageOverlayClick(event)">
+    <div class="sheet-modal" onclick="event.stopPropagation()">
+      <div class="sheet-handle"></div>
+      <div class="sheet-head">
+        <div>
+          <div class="form-section-label" style="margin:0; border:0; padding:0;">Guest communication</div>
+          <h3 id="messageModalTitle">Confirmation message</h3>
+        </div>
+        <button class="icon-btn" style="border:none;" onclick="closeGuestMessageModal()">✕</button>
+      </div>
+      <div id="messageContactMissing" class="contact-missing" style="display:none;"></div>
+      <div id="messagePreview" class="message-preview"></div>
+      <div class="message-channel-row">
+        <button id="messageWhatsappBtn" class="btn btn-whatsapp" type="button" onclick="sendGuestWhatsApp()">💬 WhatsApp</button>
+        <button id="messageEmailBtn" class="btn btn-email" type="button" onclick="sendGuestEmail()">✉️ Email</button>
+        <button class="btn btn-copy" type="button" onclick="copyGuestMessage()">Copy</button>
+      </div>
+      <div class="message-note">WhatsApp and email are opened with the message already prepared for review. The browser cannot send messages silently without a connected messaging or email provider.</div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastMsg">Syncing...</div>
+
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_d2p1rQqgLPnVuDcvRek33rC7AJVwxuWzP_Yf2P0FL_eMhr3KV7gFuzVo0XX1IGS9/exec";
+
+    const ROOMS = [
+      { id: "Double Room 1", name: "Double Room 1", type: "Standard Double" },
+      { id: "Double Room 2", name: "Double Room 2", type: "Deluxe Double" },
+      { id: "Triple Room", name: "Triple Room", type: "Deluxe Triple" },
+      { id: "Family Suite", name: "Family Suite", type: "Spacious Suite" },
+      { id: "Suite", name: "Suite", type: "Panoramic Suite" },
+      { id: "Room 6", name: "Room 6", type: "Standard Double" }
+    ];
+
+    let bookings = [];
+    let currentDate = new Date();
+    let currentTab = 'agenda';
+    let syncInProgress = false;
+    let lastSyncAt = null;
+    const STATUS_ORDER = { pending: 1, confirmed: 2, 'checked-in': 3, 'checked-out': 4, cancelled: 5 };
+
+    // Helper: Local date string in YYYY-MM-DD
+    function getLocalDateString(d) {
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function normaliseBooking(item) {
+      return {
+        id: String(item.id || "MG-" + Math.random().toString(36).substr(2, 9)),
+        guestName: item.guestName || "Guest",
+        phone: item.phone || "",
+        email: item.email || "",
+        roomId: item.roomId || "Double Room 1",
+        checkIn: cleanDateString(item.checkIn),
+        checkOut: cleanDateString(item.checkOut),
+        method: item.method || "By Visiting",
+        status: item.status || "confirmed",
+        adults: Number(item.adults || 2),
+        children: Number(item.children || 0),
+        mealPlan: item.mealPlan || "Room Only",
+        payment: item.payment || "unpaid",
+        housekeeping: item.housekeeping || "not-started",
+        notes: item.notes || ""
+      };
+    }
+
+    // Load cached bookings, including older records created before the new fields existed.
+    const cached = localStorage.getItem("morning_glow_bookings");
+    if (cached) {
+      try { bookings = JSON.parse(cached).map(normaliseBooking); } catch(e) { bookings = []; }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const today = new Date();
+      document.getElementById("headerTodayDate").innerText = getLocalDateString(today);
+      populateRoomFilter();
+      updateClock();
+      setInterval(updateClock, 30000);
+      renderCurrentView();
+      fetchFromGoogleSheet();
+    });
+
+    function updateClock() {
+      const el = document.getElementById("liveClockDisplay");
+      if (el) el.innerText = new Intl.DateTimeFormat('en-LK', { timeZone: 'Asia/Colombo', hour: '2-digit', minute: '2-digit', hour12: true }).format(new Date()) + ' · Ella';
+    }
+
+    function populateRoomFilter() {
+      const select = document.getElementById('filterRoom');
+      if (!select) return;
+      select.innerHTML = '<option value="">All rooms</option>' + ROOMS.map(r => `<option value="${escapeHtml(r.name)}">${escapeHtml(r.name)}</option>`).join('');
+    }
+
+    function getVisibleBookings() {
+      const query = (document.getElementById('bookingSearch')?.value || '').trim().toLowerCase();
+      const room = document.getElementById('filterRoom')?.value || '';
+      const status = document.getElementById('filterStatus')?.value || '';
+      const method = document.getElementById('filterMethod')?.value || '';
+      let result = bookings.filter(b => {
+        const haystack = [b.guestName, b.roomId, b.phone, b.method, b.status, b.notes, b.payment, b.housekeeping].join(' ').toLowerCase();
+        return (!query || haystack.includes(query)) && (!room || b.roomId === room) && (!status || b.status === status) && (!method || b.method === method);
+      });
+      const sort = document.getElementById('sortBookings')?.value || 'date-asc';
+      result.sort((a, b) => {
+        if (sort === 'guest-asc') return a.guestName.localeCompare(b.guestName);
+        if (sort === 'room-asc') return a.roomId.localeCompare(b.roomId);
+        if (sort === 'status') return (STATUS_ORDER[a.status] || 99) - (STATUS_ORDER[b.status] || 99);
+        const dateCompare = (a.checkIn || '').localeCompare(b.checkIn || '');
+        return sort === 'date-desc' ? -dateCompare : dateCompare;
+      });
+      return result;
+    }
+
+    function handleFilterChange() { updateDashboardStats(); renderCurrentView(); }
+    function clearFilters() {
+      ['bookingSearch','filterRoom','filterStatus','filterMethod'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+      document.getElementById('sortBookings').value = 'date-asc';
+      handleFilterChange();
+    }
+
+    function updateDashboardStats() {
+      const visible = getVisibleBookings();
+      const today = getLocalDateString(new Date());
+      const arrivals = visible.filter(b => b.checkIn === today && b.status !== 'cancelled').length;
+      const inHouse = visible.filter(b => b.checkIn <= today && today < b.checkOut && b.status !== 'cancelled').length;
+      const pending = visible.filter(b => ['pending', 'unpaid'].includes(b.status) || b.payment === 'unpaid').length;
+      document.getElementById('statVisible').innerText = visible.length;
+      document.getElementById('statArrivals').innerText = arrivals;
+      document.getElementById('statInHouse').innerText = inHouse;
+      document.getElementById('statPending').innerText = pending;
+      const summary = document.getElementById('filterSummary');
+      if (summary) summary.innerText = visible.length === bookings.length ? `Showing all ${bookings.length} reservations` : `Showing ${visible.length} of ${bookings.length} reservations`;
+    }
+
+    // ==========================================
+    // SYNC WITH GOOGLE SHEETS
+    // ==========================================
+    async function fetchFromGoogleSheet() {
+      if (syncInProgress) return;
+      syncInProgress = true;
+      setSyncStatus("Syncing with Google Sheet…");
+      showToast("Syncing with Google Sheet…");
+      try {
+        const res = await fetch(SCRIPT_URL, { method: 'GET', cache: 'no-store' });
+        if (!res.ok) throw new Error(`Sync request failed (${res.status})`);
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error('The sheet returned an unexpected format');
+        bookings = data.map(normaliseBooking);
+        localStorage.setItem("morning_glow_bookings", JSON.stringify(bookings));
+        lastSyncAt = new Date();
+        populateRoomFilter();
+        renderCurrentView();
+        setSyncStatus(`Synced ${bookings.length} reservations · ${formatSyncTime(lastSyncAt)}`);
+        showToast("Sheet synced ✓");
+      } catch (err) {
+        console.warn(err);
+        setSyncStatus("Offline mode · showing saved device data");
+        showToast("Offline mode · saved data kept");
+        renderCurrentView();
+      } finally { syncInProgress = false; }
+    }
+
+    async function pushToGoogleSheet() {
+      setSyncStatus("Saving locally and sending to Google Sheet…");
+      localStorage.setItem("morning_glow_bookings", JSON.stringify(bookings));
+      try {
+        await fetch(SCRIPT_URL, {
+          method: "POST", mode: "no-cors", keepalive: true,
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ action: "syncAll", bookings: bookings })
+        });
+        lastSyncAt = new Date();
+        setSyncStatus(`Saved locally · sent to sheet · ${formatSyncTime(lastSyncAt)}`);
+      } catch (err) {
+        console.error("Cloud push failed:", err);
+        setSyncStatus("Saved locally · sheet update will need retry");
+      }
+    }
+
+    function setSyncStatus(message) { const el = document.getElementById('syncStatus'); if (el) el.innerText = message; }
+    function formatSyncTime(date) { return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); }
+
+    function cleanDateString(val) {
+      if (!val) return "";
+      if (typeof val === 'string' && val.length >= 10 && val.includes('-')) {
+        return val.slice(0, 10);
+      }
+      const d = new Date(val);
+      if (isNaN(d.getTime())) return String(val).slice(0, 10);
+      return getLocalDateString(d);
+    }
+
+    // ==========================================
+    // NAVIGATION
+    // ==========================================
+    function switchTab(tab) {
+      currentTab = tab;
+      document.querySelectorAll(".nav-item").forEach(el => el.classList.remove("active"));
+      document.getElementById("viewAgenda").style.display = "none";
+      document.getElementById("viewTimeline").style.display = "none";
+
+      if (tab === 'agenda') {
+        document.getElementById("tabAgenda").classList.add("active");
+        document.getElementById("viewAgenda").style.display = "block";
+      } else if (tab === 'timeline') {
+        document.getElementById("tabTimeline").classList.add("active");
+        document.getElementById("viewTimeline").style.display = "block";
+      }
+      renderCurrentView();
+    }
+
+    function renderCurrentView() {
+      updateDashboardStats();
+      if (currentTab === 'agenda') renderDailyOperations();
+      else if (currentTab === 'timeline') renderTimeline();
+    }
+
+    // ==========================================
+    // DAILY OPERATIONS (TODAY & TOMORROW ROOM PREP)
+    // ==========================================
+    function renderDailyOperations() {
+      const today = new Date();
+      const todayStr = getLocalDateString(today);
+
+      const tmrw = new Date();
+      tmrw.setDate(tmrw.getDate() + 1);
+      const tmrwStr = getLocalDateString(tmrw);
+
+      let todayBookedCount = 0;
+      let tomorrowBookedCount = 0;
+      const visibleBookings = getVisibleBookings();
+
+      // 1. Build Today's Cards for all 6 rooms
+      const todayContainer = document.getElementById("todayRoomsContainer");
+      let todayHtml = "";
+
+      ROOMS.forEach(room => {
+        const active = visibleBookings.find(b => b.roomId === room.name && (todayStr >= b.checkIn && todayStr <= b.checkOut));
+
+        if (active) {
+          todayBookedCount++;
+          let statusType = "staying";
+          let statusText = "🏠 Staying Today";
+          let prepNote = "Ensure daily housekeeping & room care.";
+
+          if (active.checkIn === todayStr) {
+            statusType = "checkin";
+            statusText = "📥 Arriving Today (Check-In)";
+            prepNote = "Clean & sanitize room, prepare fresh towels and welcome drinks.";
+          } else if (active.checkOut === todayStr) {
+            statusType = "checkout";
+            statusText = "📤 Departing Today (Check-Out)";
+            prepNote = "Prepare bill & arrange room cleaning after guest leaves.";
+          }
+
+          todayHtml += createRoomCardHtml(room, active, statusType, statusText, prepNote, todayStr);
+        } else {
+          todayHtml += `
+            <div class="room-prep-card border-vacant" onclick="openAddModalForRoomDate('${room.name}', '${todayStr}')">
+              <div class="room-head">
+                <span class="room-name-title">${room.name}</span>
+                <span class="status-badge badge-vacant">Vacant</span>
+              </div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">${room.type} &bull; Ready for walk-in or new booking</div>
+            </div>
+          `;
+        }
+      });
+      todayContainer.innerHTML = todayHtml;
+      document.getElementById("todayBadgeCount").innerText = `${todayBookedCount} of 6 Rooms Active`;
+
+      // 2. Build Tomorrow's Cards for all 6 rooms
+      const tmrwContainer = document.getElementById("tomorrowRoomsContainer");
+      let tmrwHtml = "";
+
+      ROOMS.forEach(room => {
+        const active = visibleBookings.find(b => b.roomId === room.name && (tmrwStr >= b.checkIn && tmrwStr <= b.checkOut));
+
+        if (active) {
+          tomorrowBookedCount++;
+          let statusType = "staying";
+          let statusText = "🏠 Staying Tomorrow";
+          let prepNote = "Plan breakfast / dinner groceries in advance.";
+
+          if (active.checkIn === tmrwStr) {
+            statusType = "checkin";
+            statusText = "📥 Arriving Tomorrow";
+            prepNote = "Ensure room linen, amenities, and arrival timing are ready.";
+          } else if (active.checkOut === tmrwStr) {
+            statusType = "checkout";
+            statusText = "📤 Departing Tomorrow";
+            prepNote = "Verify morning breakfast schedule before check-out.";
+          }
+
+          tmrwHtml += createRoomCardHtml(room, active, statusType, statusText, prepNote, tmrwStr);
+        } else {
+          tmrwHtml += `
+            <div class="room-prep-card border-vacant" onclick="openAddModalForRoomDate('${room.name}', '${tmrwStr}')">
+              <div class="room-head">
+                <span class="room-name-title">${room.name}</span>
+                <span class="status-badge badge-vacant">Vacant Tomorrow</span>
+              </div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">${room.type} &bull; Tap to reserve for tomorrow</div>
+            </div>
+          `;
+        }
+      });
+      tmrwContainer.innerHTML = tmrwHtml;
+      document.getElementById("tomorrowBadgeCount").innerText = `${tomorrowBookedCount} of 6 Rooms Active`;
+
+      // 3. Future Bookings
+      const futureContainer = document.getElementById("futureBookingsContainer");
+      const futureBookings = visibleBookings
+        .filter(b => b.checkIn > tmrwStr)
+        .sort((a,b) => a.checkIn.localeCompare(b.checkIn));
+
+      if (futureBookings.length === 0) {
+        futureContainer.innerHTML = `<div style="font-size:0.8rem; color:var(--text-muted); padding:0.5rem 0;">No further advance bookings logged.</div>`;
+      } else {
+        let fHtml = "";
+        futureBookings.forEach(b => {
+          fHtml += `
+            <div class="room-prep-card" style="border-left:4px solid #b8cba9;" onclick="openEditModal('${b.id}')">
+              <div class="room-head">
+                <span class="room-name-title">${escapeHtml(b.roomId)} &bull; ${escapeHtml(b.guestName)}</span>
+                <span style="font-size:0.75rem; font-weight:700; color:var(--primary);">${b.checkIn}</span>
+              </div>
+              <div style="font-size:0.78rem; color:var(--text-muted);">
+                Stay: ${b.checkIn} → ${b.checkOut} (${escapeHtml(b.method)})
+              </div>
+              ${b.notes ? `<div class="food-box">📝 ${escapeHtml(b.notes)}</div>` : ''}
+            </div>
+          `;
+        });
+        futureContainer.innerHTML = fHtml;
+      }
+    }
+
+    function createRoomCardHtml(room, b, statusType, statusText, prepNote, dateStr) {
+      const phoneClean = (b.phone || "").replace(/[^0-9+]/g, '');
+      const methodDot = getMethodDotClass(b.method);
+
+      return `
+        <div class="room-prep-card border-${statusType}" onclick="openEditModal('${b.id}')">
+          <div class="room-head">
+            <span class="room-name-title">${room.name}</span>
+            <span class="status-badge badge-${statusType}">${statusText}</span>
+          </div>
+
+          <div class="guest-line">
+            👤 <strong>${escapeHtml(b.guestName)}</strong>
+            <span style="font-size:0.75rem; color:var(--text-muted); font-weight:normal;">(${b.checkIn} → ${b.checkOut})</span>
+          </div>
+          <div class="booking-meta">
+            <span>👥 ${Number(b.adults || 2) + Number(b.children || 0)} guest${Number(b.adults || 2) + Number(b.children || 0) === 1 ? '' : 's'}</span>
+            <span>🍽️ ${escapeHtml(b.mealPlan || 'Room Only')}</span>
+            <span>💳 ${escapeHtml((b.payment || 'unpaid').replace('-', ' '))}</span>
+            <span>🧹 ${escapeHtml((b.housekeeping || 'not-started').replace('-', ' '))}</span>
+          </div>
+
+          <!-- Food / Notes Highlight -->
+          <div class="food-box">
+            🍳 <strong>Food & Prep:</strong> 
+            <span>${b.notes ? escapeHtml(b.notes) : prepNote}</span>
+          </div>
+
+          <div class="card-actions-bar" onclick="event.stopPropagation()">
+            <span><span class="ch-dot ${methodDot}"></span>${escapeHtml(b.method)}</span>
+            <div style="display:flex; gap:0.4rem;">
+              ${phoneClean ? `
+                <a href="tel:${phoneClean}" class="btn-action-small">📞 Call</a>
+                <a href="https://wa.me/${phoneClean.replace('+','')}" target="_blank" class="btn-action-small" style="color:#477342;">💬 WhatsApp</a>
+              ` : ''}
+              ${(phoneClean || b.email) ? `<button type="button" class="btn-action-small" onclick="openGuestMessageModal('${b.id}')">✉️ Confirm</button>` : ''}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getMethodDotClass(method) {
+      if (!method) return "bg-visiting";
+      const m = method.toLowerCase();
+      if (m.includes("book")) return "bg-booking";
+      if (m.includes("air")) return "bg-airbnb";
+      if (m.includes("phone") || m.includes("face")) return "bg-phone";
+      return "bg-visiting";
+    }
+
+    // ==========================================
+    // TIMELINE VIEW
+    // ==========================================
+    function renderTimeline() {
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+      document.getElementById("mTimelineMonthTitle").innerText = `${monthNames[month]} ${year}`;
+
+      const header = document.getElementById("mTimelineHeader");
+      header.innerHTML = `<th class="sticky-room">Room</th>`;
+      const today = new Date();
+
+      for (let d = 1; d <= daysInMonth; d++) {
+        const isToday = today.getFullYear() === year && today.getMonth() === month && today.getDate() === d;
+        header.innerHTML += `<th style="${isToday ? 'background:#fff3b8; font-weight:800; color:#477342;' : ''}">${d}</th>`;
+      }
+
+      const tbody = document.getElementById("mTimelineBody");
+      tbody.innerHTML = "";
+
+      ROOMS.forEach(room => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `<td class="sticky-room">${room.name}</td>`;
+
+        let skip = 0;
+        for (let d = 1; d <= daysInMonth; d++) {
+          if (skip > 0) { skip--; continue; }
+
+          const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+          const b = getVisibleBookings().find(x => x.roomId === room.name && dateStr >= x.checkIn && dateStr < x.checkOut);
+
+          const td = document.createElement("td");
+          if (b && b.checkIn === dateStr) {
+            const inDate = new Date(b.checkIn);
+            const outDate = new Date(b.checkOut);
+            const diffDays = Math.max(1, Math.round((outDate - inDate)/(1000*60*60*24)));
+            const colSpan = Math.min(diffDays, daysInMonth - d + 1);
+
+            td.colSpan = colSpan;
+            skip = colSpan - 1;
+
+            const methodDot = getMethodDotClass(b.method);
+            td.innerHTML = `
+              <div class="timeline-bar ${methodDot}" onclick="openEditModal('${b.id}')">
+                <span>${escapeHtml(b.guestName)}</span>
+              </div>
+            `;
+          } else if (!b) {
+            td.onclick = () => openAddModalForRoomDate(room.name, dateStr);
+          }
+          tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+      });
+    }
+
+    // ==========================================
+    // MODAL ACTIONS
+    // ==========================================
+    function openAddModal() {
+      document.getElementById("modalTitle").innerText = "New Reservation";
+      document.getElementById("bookingId").value = "";
+      document.getElementById("bookingForm").reset();
+      document.getElementById("deleteBtn").style.display = "none";
+
+      const today = new Date();
+      const tmrw = new Date();
+      tmrw.setDate(tmrw.getDate() + 1);
+
+      document.getElementById("modalCheckIn").value = getLocalDateString(today);
+      document.getElementById("modalCheckOut").value = getLocalDateString(tmrw);
+      document.getElementById("bookingModal").style.display = "flex";
+    }
+
+    function openAddModalForRoomDate(roomName, dateStr) {
+      openAddModal();
+      document.getElementById("modalRoom").value = roomName;
+      document.getElementById("modalCheckIn").value = dateStr;
+      const nextDay = new Date(dateStr);
+      nextDay.setDate(nextDay.getDate() + 1);
+      document.getElementById("modalCheckOut").value = getLocalDateString(nextDay);
+    }
+
+    function openEditModal(id) {
+      const b = bookings.find(x => String(x.id) === String(id));
+      if (!b) return;
+
+      document.getElementById("modalTitle").innerText = "Edit Reservation";
+      document.getElementById("bookingId").value = b.id;
+      document.getElementById("modalRoom").value = b.roomId;
+      document.getElementById("modalGuest").value = b.guestName;
+      document.getElementById("modalPhone").value = b.phone || "";
+      document.getElementById("modalEmail").value = b.email || "";
+      document.getElementById("modalAdults").value = b.adults || 2;
+      document.getElementById("modalChildren").value = b.children || 0;
+      document.getElementById("modalMealPlan").value = b.mealPlan || "Room Only";
+      document.getElementById("modalPayment").value = b.payment || "unpaid";
+      document.getElementById("modalHousekeeping").value = b.housekeeping || "not-started";
+      document.getElementById("modalCheckIn").value = b.checkIn;
+      document.getElementById("modalCheckOut").value = b.checkOut;
+      document.getElementById("modalMethod").value = b.method;
+      document.getElementById("modalStatus").value = b.status || "confirmed";
+      document.getElementById("modalNotes").value = b.notes || "";
+
+      document.getElementById("deleteBtn").style.display = "block";
+      document.getElementById("bookingModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("bookingModal").style.display = "none";
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target.id === "bookingModal") closeModal();
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById("bookingId").value;
+      const roomId = document.getElementById("modalRoom").value;
+      const guestName = document.getElementById("modalGuest").value.trim();
+      const phone = document.getElementById("modalPhone").value.trim();
+      const email = document.getElementById("modalEmail").value.trim();
+      const adults = Math.max(1, Number(document.getElementById("modalAdults").value || 1));
+      const children = Math.max(0, Number(document.getElementById("modalChildren").value || 0));
+      const mealPlan = document.getElementById("modalMealPlan").value;
+      const payment = document.getElementById("modalPayment").value;
+      const housekeeping = document.getElementById("modalHousekeeping").value;
+      const checkIn = document.getElementById("modalCheckIn").value;
+      const checkOut = document.getElementById("modalCheckOut").value;
+      const method = document.getElementById("modalMethod").value;
+      const status = document.getElementById("modalStatus").value;
+      const notes = document.getElementById("modalNotes").value.trim();
+
+      if (checkOut <= checkIn) {
+        alert("Check-Out date must be after Check-In date.");
+        return;
+      }
+
+      const existingBooking = id ? bookings.find(b => String(b.id) === String(id)) : null;
+      const previousStatus = existingBooking ? existingBooking.status : null;
+
+      // Check overlap conflicts
+      const conflict = bookings.find(b => {
+        if (String(b.id) === String(id)) return false;
+        if (b.roomId !== roomId) return false;
+        return (checkIn < b.checkOut && checkOut > b.checkIn);
+      });
+
+      if (conflict) {
+        alert(`Overlap detected! ${roomId} is already booked by ${conflict.guestName} (${conflict.checkIn} to ${conflict.checkOut}).`);
+        return;
+      }
+
+      if (id) {
+        const idx = bookings.findIndex(x => String(x.id) === String(id));
+        if (idx !== -1) {
+          bookings[idx] = { id, roomId, guestName, phone, email, adults, children, mealPlan, payment, housekeeping, checkIn, checkOut, method, status, notes };
+        }
+      } else {
+        bookings.push({
+          id: "MG-" + Date.now().toString(36),
+          roomId,
+          guestName,
+          phone,
+          email,
+          adults,
+          children,
+          mealPlan,
+          payment,
+          housekeeping,
+          checkIn,
+          checkOut,
+          method,
+          status,
+          notes
+        });
+      }
+
+      localStorage.setItem("morning_glow_bookings", JSON.stringify(bookings));
+      closeModal();
+      renderCurrentView();
+      showToast("Saved on device ✓");
+      pushToGoogleSheet();
+      if (id && previousStatus && previousStatus !== status) {
+        setTimeout(() => openGuestMessageModal(id, status), 180);
+      }
+    }
+
+    let activeMessageBookingId = null;
+    let activeMessageStatus = null;
+
+    function statusLabel(status) {
+      return ({ pending: 'Pending', confirmed: 'Confirmed', 'checked-in': 'Checked In', 'checked-out': 'Checked Out', cancelled: 'Cancelled' })[status] || status || 'Updated';
+    }
+
+    function buildGuestMessage(b, statusOverride) {
+      const status = statusOverride || b.status;
+      const name = b.guestName || 'Guest';
+      const note = b.notes ? `\n\nNotes for your stay: ${b.notes}` : '';
+      if (status === 'cancelled') {
+        return `Dear ${name},\n\nWe’re writing to confirm that your reservation at Morning Glow Ella has been cancelled. If this was unexpected, please contact us and we’ll be happy to help.\n\nWarm regards,\nMorning Glow Ella\nElla, Sri Lanka`;
+      }
+      return `Dear ${name},\n\nThank you for choosing Morning Glow Ella. Your reservation status is now: ${statusLabel(status)}.\n\nRoom: ${b.roomId}\nCheck-in: ${b.checkIn}\nCheck-out: ${b.checkOut}\nGuests: ${Number(b.adults || 2) + Number(b.children || 0)}\nMeal plan: ${b.mealPlan || 'Room Only'}${note}\n\nWe look forward to welcoming you. Please reply if you need assistance with arrival arrangements or anything during your stay.\n\nWarm regards,\nMorning Glow Ella\nBoutique Stay & Guest Operations`;
+    }
+
+    function openGuestMessageModal(id, statusOverride) {
+      const b = bookings.find(x => String(x.id) === String(id));
+      if (!b) return;
+      activeMessageBookingId = String(id);
+      activeMessageStatus = statusOverride || b.status;
+      const message = buildGuestMessage(b, activeMessageStatus);
+      document.getElementById('messageModalTitle').innerText = `${statusLabel(activeMessageStatus)} · ${b.guestName}`;
+      document.getElementById('messagePreview').innerText = message;
+      const missing = document.getElementById('messageContactMissing');
+      const wa = document.getElementById('messageWhatsappBtn');
+      const em = document.getElementById('messageEmailBtn');
+      wa.style.display = b.phone ? 'block' : 'none';
+      em.style.display = b.email ? 'block' : 'none';
+      if (!b.phone && !b.email) {
+        missing.style.display = 'block';
+        missing.innerText = 'No phone number or email is saved for this guest. Edit the reservation to add a contact before sending.';
+      } else { missing.style.display = 'none'; }
+      document.getElementById('guestMessageModal').style.display = 'flex';
+    }
+
+    function closeGuestMessageModal() { document.getElementById('guestMessageModal').style.display = 'none'; }
+    function handleMessageOverlayClick(e) { if (e.target.id === 'guestMessageModal') closeGuestMessageModal(); }
+    function getActiveMessageBooking() { return bookings.find(x => String(x.id) === String(activeMessageBookingId)); }
+    function sendGuestWhatsApp() {
+      const b = getActiveMessageBooking(); if (!b || !b.phone) return;
+      const phone = b.phone.replace(/[^0-9]/g, '');
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(buildGuestMessage(b, activeMessageStatus))}`, '_blank', 'noopener');
+    }
+    function sendGuestEmail() {
+      const b = getActiveMessageBooking(); if (!b || !b.email) return;
+      const subject = `Morning Glow Ella · ${statusLabel(activeMessageStatus)} reservation`;
+      window.location.href = `mailto:${encodeURIComponent(b.email)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(buildGuestMessage(b, activeMessageStatus))}`;
+    }
+    async function copyGuestMessage() {
+      const el = document.getElementById('messagePreview');
+      try { await navigator.clipboard.writeText(el.innerText); showToast('Message copied ✓'); }
+      catch { showToast('Select and copy the message manually'); }
+    }
+
+    function deleteActiveBooking() {
+      const id = document.getElementById("bookingId").value;
+      if (!id) return;
+      if (confirm("Delete this reservation?")) {
+        bookings = bookings.filter(x => String(x.id) !== String(id));
+        localStorage.setItem("morning_glow_bookings", JSON.stringify(bookings));
+        closeModal();
+        renderCurrentView();
+        showToast("Deleted ✓");
+        pushToGoogleSheet();
+      }
+    }
+
+    function prevMonth() {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderTimeline();
+    }
+
+    function nextMonth() {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderTimeline();
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toastMsg");
+      toast.innerText = msg;
+      toast.classList.add("show");
+      setTimeout(() => toast.classList.remove("show"), 2500);
+    }
+
+    function escapeHtml(str) {
+      if (!str) return "";
+      return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+  </script>
+</body>
+</html>
